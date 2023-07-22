@@ -89,13 +89,23 @@ const LineGraph = ({ data }) => {
     }
 
 
+    // Calculate the average of the sold_price values
+    const averageSoldPrice =
+        data && data.length > 0 ? (data.reduce((sum, d) => sum + d.sold_price, 0) / data.length).toFixed(2) : 0;
+
+
+
     return (
         <div className="graph-container">
             <h2>Line Graph</h2>
             <div className="data-calculations">
                 <div className="average">
-                    Average: {}
+                    Average Sales Price: ${averageSoldPrice}
                 </div>
+                <div className="total">
+                    Total Items: {data.length}
+                </div>
+
             </div>
             <div ref={svgRef}></div>
         </div>
