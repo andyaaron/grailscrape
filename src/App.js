@@ -1,14 +1,21 @@
-import './App.css';
-
+import {useState, useEffect} from "react";
 import algoliasearch from "algoliasearch";
 import axios from 'axios';
-import {useState} from "react";
 
+import LineGraph from "./LineGraph";
+import './App.css';
+import BarChart from "./BarChart";
+
+// @TODO: Try using react instant search!
 function App() {
     const [designer, setDesigner] = useState('');
     const [inputValue, setInputValue] = useState('');
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [hits, setHits] = useState([]);
+
+    useEffect(() => {
+        // BarChart();
+    }, []);
 
     // make an api request to algolia, submit a search term and designer name
     const handleSubmit = async (event) => {
@@ -20,6 +27,7 @@ function App() {
 
         try {
 
+            let dates_and_prices = [];
             // Make API GET request
             const response = await index.search(inputValue,{
                 // facetFilters: [
@@ -27,7 +35,16 @@ function App() {
                 // ],
                 facets: ["department","category_path","category_size","designers.name","sold_price","condition","location","badges","strata"],
             })
-            setHits(response.hits);
+            response.hits.forEach(hit => {
+                // console.log(`hit: ${hit.sold_at}`);
+                let data = {
+                    sold_at: hit.sold_at,
+                    sold_price: hit.sold_price
+                };
+                dates_and_prices.push(data);
+
+            })
+            setHits(dates_and_prices);
             setFormSubmitted(true);
         } catch (error) {
             console.error(error);
@@ -80,13 +97,7 @@ function App() {
 
                 <div className='results-container'>
                 {formSubmitted && hits.length > 0 ? (
-                    <div>
-                        {hits.map((hit, index) => (
-                            <p key={index}>
-                                {hit['title']}
-                            </p>
-                        ))}
-                    </div>
+                    <LineGraph data={hits} />
                 ) : (
                     <div>
                         <p>No data returned!</p>
@@ -94,6 +105,7 @@ function App() {
                 )
                 }
                 </div>
+
             </div>
         </div>
     );
