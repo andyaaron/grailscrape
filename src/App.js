@@ -9,7 +9,7 @@ import BarChart from "./BarChart";
 // @TODO: Try using react instant search!
 function App() {
     const [designer, setDesigner] = useState('');
-    const [inputValue, setInputValue] = useState('');
+    const [productName, setProductName] = useState('');
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [hits, setHits] = useState([]);
 
@@ -29,7 +29,7 @@ function App() {
 
             let dates_and_prices = [];
             // Make API GET request
-            const response = await index.search(inputValue,{
+            const response = await index.search(productName,{
                 // facetFilters: [
                 //     `designers.name:"${designer}"`
                 // ],
@@ -57,7 +57,7 @@ function App() {
     };
 
     const handleSearchChange = (event) => {
-        setInputValue(event.target.value);
+        setProductName(event.target.value);
     };
 
     return (
@@ -82,16 +82,14 @@ function App() {
                             type='search'
                             placeholder='Product Name'
                             aria-label='Enter Product Name'
-                            value={inputValue}
+                            value={productName}
                             onChange={handleSearchChange}
                         />
                     </div>
                     <div className='entry-field'>
-                        <button aria-label='Search' aria-role='button'>Submit</button>
+                        <button aria-label='Search' role='button'>Submit</button>
                     </div>
                 </form>
-
-                <h2>{inputValue}</h2>
 
                 {formSubmitted && hits.length > 0 ? (
                     <LineGraph data={hits} />

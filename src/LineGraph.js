@@ -58,6 +58,11 @@ const LineGraph = ({ data }) => {
 
         // Clear any previous graph elements
         d3.select(svgRef.current).selectAll('*').remove();
+        d3.select('#container')
+            .select('svg')
+            .remove();d3.select('#container')
+            .select('.tooltip')
+            .remove();
 
         // Append the graph
         const svg = d3
@@ -109,13 +114,76 @@ const LineGraph = ({ data }) => {
             .attr('cy', (d) => yScale(d.sold_price))
             .attr('r', 5)
             .attr('fill', 'green');
+
+        // Setup our tooltip
+        const focus = svg
+            .append('g')
+            .attr('class', 'focus')
+            .style('display', 'none')
+
+        focus.append('circle').attr('r', 5).attr('class', 'circle');
+
+        const tooltip = d3
+            .select('.container')
+            .append('div')
+            .attr('class', 'tooltip')
+            .style('opacity', 0);
+
+
+        const mousemove = (event) => {
+            const bisect = d3.bisector((d) => d.sold_at).left;
+            const xPos = d3.pointer(event)[0];
+            const x0 = bisect(data, xScale.invert(xPos));
+            const d0 = data[x0];
+            focus.attr(
+                "transform",
+                "translate(" + xScale(d0.sold_at) + "," + yScale(d0.sold_price) + ")",
+            );
+            tooltip
+                .transition()
+                .duration(300)
+                .style("opacity", 0.9);
+            tooltip
+                .html(d0.tooltipContent || d0.sold_price)
+                .style("transform",
+                    `translate(${xScale(d0.sold_at) + 30}px, ${yScale(d0.sold_price) - 30}px)`,
+                );
+
+        }
+
+        svg
+            .append("rect")
+            .attr("class", "overlay")
+            .attr("width", width)
+            .attr("height", height)
+            .style('opacity', '0')
+            .on("mouseover", () => focus.style("display", null))
+            .on("mouseout", () => {
+                tooltip.transition().duration(500).style("opacity", 0);
+            })
+            .on("mousemove", mousemove);
+
     }
 
+    // Calculate the average of the sold_price values in a currency format
+    const averageSoldPrice = (data.reduce((sum, d) => sum + d.sold_price, 0) / data.length).toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    });
 
-    // Calculate the average of the sold_price values
-    const averageSoldPrice =
-        data && data.length > 0 ? (data.reduce((sum, d) => sum + d.sold_price, 0) / data.length).toFixed(2) : 0;
+    // Calculate the highest sold_price value
+    const highestSoldPrice = () => {
+        const highestPrice = Math.max(...data.map((item) => item.sold_price));
+        return highestPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    };
 
+    // Calculate the lowest sold_price value in a currency format
+    const getLowestSoldPrice = () => {
+        return Math.min(...data.map((item) => item.sold_price)).toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
+    };
 
 
     return (
@@ -125,19 +193,19 @@ const LineGraph = ({ data }) => {
             </div>
             <div className="row data-calculations">
                 <div className="average">
-                    <span>${averageSoldPrice}</span>
+                    <span>{averageSoldPrice}</span>
                     <label>Average Sales Price</label>
                 </div>
                 <div className="total">
-                    <span>{data.length}</span>
+                    <span>{data && data.length > 0 && data.length}</span>
                     <label>Total Items</label>
                 </div>
                 <div className="lowest-price">
-                    <span>${data[0].sold_price}</span>
+                    <span>{data && data.length > 0 && getLowestSoldPrice()}</span>
                     <label>Lowest Price</label>
                 </div>
                 <div className="highest-price">
-                    <span>${data[data.length - 1].sold_price}</span>
+                    <span>{data && data.length > 0 && highestSoldPrice()}</span>
                     <label>Highest Price</label>
                 </div>
 

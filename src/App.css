@@ -91,9 +91,8 @@ form .entry-field button {
 }
 
 .data-calculations {
-  display: flex;
-  flex-direction: row;
-  flex-flow: wrap;
+  display: grid;
+  grid-template-columns: 50% 50%;
   gap: 10px;
 }
 
@@ -105,7 +104,6 @@ form .entry-field button {
   padding: 20px;
   background: rgba(47, 47, 47, 0.9);
   color: #fff;
-  width: 40vw;
 }
 
 .data-calculations span {
