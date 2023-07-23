@@ -20,11 +20,46 @@ const LineGraph = ({ data }) => {
         // Format date in "MM-DD-YYYY" format
         const formatDate = d3.timeFormat('%Y-%m-%d');
 
+        // Function to handle data point click event
+        const handleDataPointClick = (event, dataPoint) => {
+            console.log('we in here');
+            const additionalDataDiv = document.querySelector('.additional-product-info');
+            if (additionalDataDiv) {
+                // Clear the existing content of the div
+                additionalDataDiv.innerHTML = '';
+
+                // Append the relevant data to the div
+                additionalDataDiv.innerHTML = `
+                <h3>${dataPoint.title}</h3>
+                <div class="flex-container">
+                    <div class="column">
+                        <div class="image">
+                                <img src="${dataPoint.url}" />
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="sold-price"><b>Sold Price</b>: ${dataPoint.sold_price.toLocaleString('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                        })}</div>
+                        <div class="sold-date">
+                            <b>Sold At</b>: ${dayjs(dataPoint.sold_at).format('MM-DD-YYYY')}
+                        </div>
+                    </div>
+                </div>
+                `;
+
+                // additionalDataDiv.appendChild(dataPointInfo);
+            }
+        };
+
         // Parse the date format and convert sold_price values to numbers
         data.forEach((d) => {
             let sold_at = new Date(d.sold_at); // format the date
             d.sold_at = new Date(sold_at);
             d.sold_price = +d.sold_price;
+            d.url = d.url;
+            d.title = d.title;
         })
 
         // Create scales for x and y axes
@@ -54,6 +89,8 @@ const LineGraph = ({ data }) => {
             .y((d) => yScale(d.sold_price));
 
         // Create a custom usd formatter for the y-axis
+        // @TODO: Move this to a utils file
+        // @TODO: Make the currency convertable
         const formatUSD = d3.format('$,.0f');
 
         // Clear any previous graph elements
@@ -109,6 +146,7 @@ const LineGraph = ({ data }) => {
             .data(data)
             .enter()
             .append('circle')
+            .on('click', handleDataPointClick)
             .attr('class', 'dot')
             .attr('cx', (d) => xScale(d.sold_at))
             .attr('cy', (d) => yScale(d.sold_price))
@@ -116,52 +154,64 @@ const LineGraph = ({ data }) => {
             .attr('fill', 'green');
 
         // Setup our tooltip
-        const focus = svg
-            .append('g')
-            .attr('class', 'focus')
-            .style('display', 'none')
+        // const focus = svg
+        //     .append('g')
+        //     .attr('class', 'focus')
+        //     .style('display', 'none')
+        //
+        // focus
+        //     .append('circle')
+        //     .attr('r', 5)
+        //     .attr('class', 'circle')
+        //     .on('click', handleDataPointClick);
+        //
+        // const tooltip = d3
+        //     .select('#svg')
+        //     .append('div')
+        //     .attr('class', 'tooltip')
+        //     .style('opacity', 0);
 
-        focus.append('circle').attr('r', 5).attr('class', 'circle');
-
-        const tooltip = d3
-            .select('.container')
-            .append('div')
-            .attr('class', 'tooltip')
-            .style('opacity', 0);
-
-
-        const mousemove = (event) => {
-            const bisect = d3.bisector((d) => d.sold_at).left;
-            const xPos = d3.pointer(event)[0];
-            const x0 = bisect(data, xScale.invert(xPos));
-            const d0 = data[x0];
-            focus.attr(
-                "transform",
-                "translate(" + xScale(d0.sold_at) + "," + yScale(d0.sold_price) + ")",
-            );
-            tooltip
-                .transition()
-                .duration(300)
-                .style("opacity", 0.9);
-            tooltip
-                .html(d0.tooltipContent || d0.sold_price)
-                .style("transform",
-                    `translate(${xScale(d0.sold_at) + 30}px, ${yScale(d0.sold_price) - 30}px)`,
-                );
-
-        }
-
-        svg
-            .append("rect")
-            .attr("class", "overlay")
-            .attr("width", width)
-            .attr("height", height)
-            .style('opacity', '0')
-            .on("mouseover", () => focus.style("display", null))
-            .on("mouseout", () => {
-                tooltip.transition().duration(500).style("opacity", 0);
-            })
-            .on("mousemove", mousemove);
+        //
+        // const mousemove = (event) => {
+        //     const bisect = d3.bisector((d) => d.sold_at).left;
+        //     const xPos = d3.pointer(event)[0];
+        //     const x0 = bisect(data, xScale.invert(xPos));
+        //     const d0 = data[x0];
+        //     d0.tooltipContent = `
+        //         <div class="tooltipContent-container">
+        //             <div class="sold-price">${d0.sold_price}</div>
+        //         </div>`;
+        //
+        //     focus.attr(
+        //         "transform",
+        //         `translate(${xScale(d0.sold_at)}, ${yScale(d0.sold_price)})`,
+        //     );
+        //     tooltip
+        //         .transition()
+        //         .duration(300)
+        //         .style("opacity", 0.9);
+        //     tooltip
+        //         .html(d0.tooltipContent || d0.sold_price)
+        //         .style("transform",
+        //             `translate(${xScale(d0.sold_at) + 30}px, ${yScale(d0.sold_price)}px)`,
+        //         );
+        //
+        // }
+        //
+        // svg
+        //     .append("rect")
+        //     .attr("class", "overlay")
+        //     .attr("width", width)
+        //     .attr("height", height)
+        //     .attr('pointer-events', 'none')
+        //     .style('opacity', '0')
+        //     .on("mouseover", () => {
+        //         focus.style("display", null);
+        //     })
+        //     .on("mouseout", () => {
+        //         tooltip.transition().duration(200).style("opacity", 0);
+        //     })
+        //     .on("mousemove", mousemove);
 
     }
 
@@ -189,7 +239,9 @@ const LineGraph = ({ data }) => {
     return (
         <div className="container">
             <h2>Price History</h2>
-            <div className="row" ref={svgRef}>
+            <div className="row">
+            <div id="svg" ref={svgRef}></div>
+            <div className="additional-product-info"></div>
             </div>
             <div className="row data-calculations">
                 <div className="average">

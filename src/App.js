@@ -39,7 +39,9 @@ function App() {
                 // console.log(`hit: ${hit.sold_at}`);
                 let data = {
                     sold_at: hit.sold_at,
-                    sold_price: hit.sold_price
+                    sold_price: hit.sold_price,
+                    url: hit.cover_photo.url,
+                    title: hit.title
                 };
                 dates_and_prices.push(data);
 

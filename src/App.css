@@ -2,6 +2,13 @@
   text-align: center;
 }
 
+.flex-container {
+  display: flex;
+  flex-flow: wrap;
+}
+
+
+
 h2 {
   text-align: left;
   width: 550px;
@@ -41,6 +48,12 @@ h2 {
 .container {
   position: relative;
   width: 100%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .row {
@@ -118,8 +131,43 @@ svg .grid {
 svg .dot {
   stroke-width: 2px;
   stroke: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
 }
 
+.tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(47, 47, 47, 0.9);
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  pointer-events: none;
+}
+
+.tooltipContent-container img {
+  max-width: 50px;
+  height: auto;
+}
+
+.additional-product-info {
+  text-align: left;
+}
+
+.additional-product-info h3 {
+  margin-top: 0;
+  font-size: 1rem;
+}
+
+.additional-product-info img {
+  max-width: 250px;
+  height: auto;
+}
+
+.additional-product-info .column:nth-child(2) {
+  justify-content: flex-start;
+  margin-left: 1rem;
+}
 
 @keyframes App-logo-spin {
   from {
