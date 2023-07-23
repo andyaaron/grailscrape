@@ -65,7 +65,7 @@ function App() {
     return (
         <div className="App">
             <header className="App-header">
-                <h2>Grailscraper</h2>
+                <h2>GrailSight</h2>
             </header>
 
             <div className='container'>
