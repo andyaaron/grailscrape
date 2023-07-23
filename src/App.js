@@ -30,9 +30,8 @@ function App() {
             let dates_and_prices = [];
             // Make API GET request
             const response = await index.search(productName,{
-                // facetFilters: [
-                //     `designers.name:"${designer}"`
-                // ],
+                facetFilters: "designers.name:"+designer,
+                // query: productName,
                 facets: ["department","category_path","category_size","designers.name","sold_price","condition","location","badges","strata"],
             })
             response.hits.forEach(hit => {
