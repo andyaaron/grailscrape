@@ -2,6 +2,15 @@
   text-align: center;
 }
 
+h2 {
+  text-align: left;
+  width: 550px;
+  display: flex;
+  margin: 0 auto 0 1rem;
+  text-transform: uppercase;
+
+}
+
 .App-logo {
   height: 4vmin;
   pointer-events: none;
@@ -15,23 +24,102 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 10vh;
+  height: 3vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(5px + 2vmin);
   color: white;
   padding: 1rem;
-  margin-bottom: 1rem;
 }
 
 .App-link {
   color: #61dafb;
 }
 
+.container {
+  position: relative;
+  width: 100%;
+}
+
+.row {
+  margin: 1rem;
+  display: flex;
+}
+
 p {
   font-size: 1rem;
+}
+
+form {
+  background: #282c34;
+  color: #fff;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 1rem;
+}
+
+form .entry-field {
+  border: none;
+  display: flex;
+  flex-direction:row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+form .entry-field label {
+  text-align: left;
+}
+
+form .entry-field input {
+  width: 100%;
+  height: 45px;
+}
+
+form .entry-field button {
+  width: 15vw;
+  border: none;
+  height: 45px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: #488147;
+  color: #fff;
+  cursor: pointer;
+}
+
+.data-calculations {
+  display: flex;
+  flex-direction: row;
+  flex-flow: wrap;
+  gap: 10px;
+}
+
+.data-calculations div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  background: rgba(47, 47, 47, 0.9);
+  color: #fff;
+  width: 40vw;
+}
+
+.data-calculations span {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+svg .grid {
+  color: #ccc;
+}
+
+svg .dot {
+  stroke-width: 2px;
+  stroke: rgba(255, 255, 255, 0.7);
 }
 
 

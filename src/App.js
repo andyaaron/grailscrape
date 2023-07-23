@@ -63,39 +63,36 @@ function App() {
     return (
         <div className="App">
             <header className="App-header">
-                <h2>Grailscrape</h2>
-                <p>Use this search tool to find the average price for a product.
-                    The average is calculated from products found on grailed's sold filter.
-                    To help get an accurate average, enter the designer name and the exact product name.
-                    I'm trying to think of better ways to ensure an accurate representation of data is given.
-                    If i can pull the sold listing images, the user could remove ones that do not pertain to
-                    the product they are trying to get data for.
-                </p>
+                <h2>Grailscraper</h2>
             </header>
 
             <div className='container'>
                 <form onSubmit={handleSubmit}>
-                    <div className='designer-input'>
-                        <label>Designer</label>
+                    <div className='entry-field'>
                         <input
                             type='search'
-                            placeholder='Nike'
+                            placeholder='Designer'
+                            aria-label='Enter Designer Name'
                             value={designer}
                             onChange={handleDesignerChange}
                         />
                     </div>
-                    <div className='product-name-input'>
-                        <label>Search</label>
+                    <div className='entry-field'>
                         <input
                             type='search'
+                            placeholder='Product Name'
+                            aria-label='Enter Product Name'
                             value={inputValue}
                             onChange={handleSearchChange}
                         />
                     </div>
-                    <button>Submit</button>
+                    <div className='entry-field'>
+                        <button aria-label='Search' aria-role='button'>Submit</button>
+                    </div>
                 </form>
 
-                <div className='results-container'>
+                <h2>{inputValue}</h2>
+
                 {formSubmitted && hits.length > 0 ? (
                     <LineGraph data={hits} />
                 ) : (
@@ -104,8 +101,6 @@ function App() {
                     </div>
                 )
                 }
-                </div>
-
             </div>
         </div>
     );
