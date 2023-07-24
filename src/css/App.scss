@@ -1,3 +1,5 @@
+@import "./variables";
+
 .App {
 }
 
@@ -5,8 +7,6 @@
   display: flex;
   flex-flow: wrap;
 }
-
-
 
 h2 {
   text-align: left;
@@ -86,9 +86,6 @@ p {
 
 form {
   color: #fff;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
   margin-bottom: 1rem;
 }
 
@@ -101,8 +98,21 @@ form .entry-field {
 }
 
 .ais-SearchBox input {
-  width: 150px;
+  width: 80%;
   height: 35px;
+}
+
+.ais-SearchBox-form {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+}
+
+.ais-SearchBox-form svg {
+  fill: #fff;
+  width: 15px;
+  height: 15px;
 }
 
 .ais-SearchBox .ais-SearchBox-submit,
@@ -112,8 +122,8 @@ form .entry-field {
   height: 25px;
   font-weight: bold;
   text-transform: uppercase;
-  background: #488147;
   cursor: pointer;
+  background: none;
 
 }
 
@@ -209,6 +219,17 @@ svg .dot {
 .additional-product-info .column:nth-child(2) {
   justify-content: flex-start;
   margin-left: 1rem;
+}
+
+.collapsible-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.collapsible-header h3 {
+  margin: 5px 0;
 }
 
 @keyframes App-logo-spin {

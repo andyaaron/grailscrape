@@ -5,7 +5,8 @@ import {InstantSearch, RefinementList, SearchBox, Hits} from 'react-instantsearc
 import LineGraph from "../graphs/LineGraph";
 import PriceData from "./PriceData";
 
-import '../css/App.css';
+import '../css/App.scss';
+import Collapsible from "../helpers/Collapsible";
 
 // @TODO: Try using react instant search!
 function App() {
@@ -86,11 +87,17 @@ function App() {
                 <div className="search-form">
                     <SearchBox />
                     <div className={"filters"}>
-                        <h3>Category</h3>
-                        <RefinementList attribute="category" operator="and" />
+                        <Collapsible title="Category">
+                            <RefinementList attribute="category" operator="and" />
+                        </Collapsible>
 
-                        <h3>Location</h3>
-                        <RefinementList attribute="location" operator="and" />
+                        <Collapsible title="Designer">
+                            <RefinementList attribute="designers.name" operator="and" />
+                        </Collapsible>
+
+                        <Collapsible title="Location">
+                            <RefinementList attribute="location" operator="and" />
+                        </Collapsible>
                     </div>
                 </div>
                     {hits && (

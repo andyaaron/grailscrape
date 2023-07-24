@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './css/index.css';
+import './css/index.scss';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import TagManager from 'react-gtm-module'
