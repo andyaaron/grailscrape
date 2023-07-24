@@ -1,5 +1,4 @@
 .App {
-  text-align: center;
 }
 
 .flex-container {
@@ -47,7 +46,8 @@ h2 {
 
 .container {
   position: relative;
-  width: 100%;
+  width: 60vw;
+  margin: 10px auto;
 }
 
 .column {
@@ -67,10 +67,25 @@ p {
   font-size: 1rem;
 }
 
-form {
-  background: #282c34;
+.search-form {
   color: #fff;
+  background: #282c34;
   padding: 1.2rem;
+
+}
+
+.search-form ul {
+  text-align: left;
+  list-style: none;
+  padding-left: 0;
+}
+
+.search-form .ais-RefinementList-count {
+  margin-left: 5px;
+}
+
+form {
+  color: #fff;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -83,6 +98,27 @@ form .entry-field {
   flex-direction:row;
   justify-content: space-between;
   width: 100%;
+}
+
+.ais-SearchBox input {
+  width: 150px;
+  height: 35px;
+}
+
+.ais-SearchBox .ais-SearchBox-submit,
+.ais-SearchBox .ais-SearchBox-reset{
+  width: 35px;
+  border: none;
+  height: 25px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: #488147;
+  cursor: pointer;
+
+}
+
+.ais-SearchBox .ais-SearchBox-submit svg {
+
 }
 
 form .entry-field label {

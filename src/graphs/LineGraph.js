@@ -1,17 +1,53 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import dayjs from 'dayjs';
+import {useHits} from "react-instantsearch-hooks-web";
 
-const LineGraph = ({ data }) => {
+const LineGraph = ( props ) => {
     const svgRef = useRef();
+    const { hits, results, sendEvent } = useHits(props);
 
     useEffect(() => {
-        if (data && data.length > 0) {
-            const sortedData = data.slice().sort((a, b) => a.sold_at - b.sold_at);
+        if (hits && hits.length > 0) {
+            const sortedData = hits.slice().sort((a, b) => a.sold_at - b.sold_at);
             createGraph(sortedData);
         }
-    }, [data]);
+    }, [hits]);
 
+
+    // Function to handle data point click event
+    const handleDataPointClick = (event, dataPoint) => {
+        console.log('we in here');
+        console.log(`dataPoint: ${JSON.stringify(dataPoint)}`);
+        const additionalDataDiv = document.querySelector('.additional-product-info');
+        if (additionalDataDiv) {
+            // Clear the existing content of the div
+            additionalDataDiv.innerHTML = '';
+
+            // Append the relevant data to the div
+            additionalDataDiv.innerHTML = `
+                <h3>${dataPoint.title}</h3>
+                <div class="flex-container">
+                    <div class="column">
+                        <div class="image">
+                                <img src="${dataPoint.cover_photo.url}" />
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="sold-price"><b>Sold Price</b>: ${dataPoint.sold_price.toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+            })}</div>
+                        <div class="sold-date">
+                            <b>Sold At</b>: ${dayjs(dataPoint.sold_at).format('MM-DD-YYYY')}
+                        </div>
+                    </div>
+                </div>
+                `;
+
+            // additionalDataDiv.appendChild(dataPointInfo);
+        }
+    };
     const createGraph = async (data) => {
         const margin = { top: 20, right: 30, bottom: 30, left: 30 };
         const maxWidth = 600;
@@ -21,38 +57,6 @@ const LineGraph = ({ data }) => {
         // Format date in "MM-DD-YYYY" format
         const formatDate = d3.timeFormat('%Y-%m-%d');
 
-        // Function to handle data point click event
-        const handleDataPointClick = (event, dataPoint) => {
-            console.log('we in here');
-            const additionalDataDiv = document.querySelector('.additional-product-info');
-            if (additionalDataDiv) {
-                // Clear the existing content of the div
-                additionalDataDiv.innerHTML = '';
-
-                // Append the relevant data to the div
-                additionalDataDiv.innerHTML = `
-                <h3>${dataPoint.title}</h3>
-                <div class="flex-container">
-                    <div class="column">
-                        <div class="image">
-                                <img src="${dataPoint.url}" />
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div class="sold-price"><b>Sold Price</b>: ${dataPoint.sold_price.toLocaleString('en-US', {
-                            style: 'currency',
-                            currency: 'USD',
-                        })}</div>
-                        <div class="sold-date">
-                            <b>Sold At</b>: ${dayjs(dataPoint.sold_at).format('MM-DD-YYYY')}
-                        </div>
-                    </div>
-                </div>
-                `;
-
-                // additionalDataDiv.appendChild(dataPointInfo);
-            }
-        };
 
         // Parse the date format and convert sold_price values to numbers
         data.forEach((d) => {

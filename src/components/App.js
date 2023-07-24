@@ -1,14 +1,15 @@
 import {useState, useEffect} from "react";
 import algoliasearch from "algoliasearch";
-import axios from 'axios';
+import {InstantSearch, RefinementList, SearchBox, Hits} from 'react-instantsearch-hooks-web';
 
-import LineGraph from "./LineGraph";
-import './App.css';
-import BarChart from "./BarChart";
+import LineGraph from "../graphs/LineGraph";
 import PriceData from "./PriceData";
+
+import '../css/App.css';
 
 // @TODO: Try using react instant search!
 function App() {
+    const [isCollapsed, setIsCollapsed] = useState(true);
     const [designer, setDesigner] = useState('');
     const [productName, setProductName] = useState('');
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -24,13 +25,18 @@ function App() {
         // BarChart();
     }, []);
 
+
+    const toggleCollapse = () => {
+        setIsCollapsed(!isCollapsed);
+    };
+
+    const client = algoliasearch('MNRWEFSS2Q', 'bc9ee1c014521ccf312525a4ef324a16');
+    const index = client.initIndex('Listing_sold_production');
     // make an api request to algolia, submit a search term and designer name
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         // setup client and index we want to search
-        const client = algoliasearch('MNRWEFSS2Q', 'bc9ee1c014521ccf312525a4ef324a16');
-        const index = client.initIndex('Listing_sold_production');
 
         try {
 
@@ -76,36 +82,55 @@ function App() {
             </header>
 
             <div className='container'>
-                <form onSubmit={handleSubmit}>
-                    <div className='entry-field'>
-                        <input
-                            type='search'
-                            placeholder='Designer'
-                            aria-label='Enter Designer Name'
-                            value={designer}
-                            onChange={handleDesignerChange}
-                        />
-                    </div>
-                    <div className='entry-field'>
-                        <input
-                            type='search'
-                            placeholder='Product Name'
-                            aria-label='Enter Product Name'
-                            value={productName}
-                            onChange={handleSearchChange}
-                        />
-                    </div>
-                    <div className={'entry-field'}>
-                       <select>
+                <InstantSearch searchClient={client} indexName="Listing_sold_production">
+                <div className="search-form">
+                    <SearchBox />
+                    <div className={"filters"}>
+                        <h3>Category</h3>
+                        <RefinementList attribute="category" operator="and" />
 
-                       </select>
+                        <h3>Location</h3>
+                        <RefinementList attribute="location" operator="and" />
                     </div>
-                    <div className='entry-field'>
-                        <button aria-label='Search' role='button'>Submit</button>
-                    </div>
-                </form>
+                </div>
+                    {hits && (
+                    <>
+                        <PriceData data={hits} />
+                        <LineGraph data={hits} />
+                    </>
+                    )}
+                </InstantSearch>
+                {/*<form onSubmit={handleSubmit}>*/}
+                {/*    <div className='entry-field'>*/}
+                {/*        <input*/}
+                {/*            type='search'*/}
+                {/*            placeholder='Designer'*/}
+                {/*            aria-label='Enter Designer Name'*/}
+                {/*            value={designer}*/}
+                {/*            onChange={handleDesignerChange}*/}
+                {/*        />*/}
+                {/*    </div>*/}
+                {/*    <div className='entry-field'>*/}
+                {/*        <input*/}
+                {/*            type='search'*/}
+                {/*            placeholder='Product Name'*/}
+                {/*            aria-label='Enter Product Name'*/}
+                {/*            value={productName}*/}
+                {/*            onChange={handleSearchChange}*/}
+                {/*        />*/}
+                {/*    </div>*/}
+                {/*    <div className={'entry-field'}>*/}
+                {/*       <select>*/}
 
-                {formSubmitted && hits.length > 0 ? (
+                {/*       </select>*/}
+                {/*    </div>*/}
+                {/*    <div className='entry-field'>*/}
+                {/*        <button aria-label='Search' role='button'>Submit</button>*/}
+                {/*    </div>*/}
+                {/*</form>*/}
+
+
+                {hits.length > 0 ? (
                     <>
                         <PriceData data={hits} />
                         <LineGraph data={hits} />
