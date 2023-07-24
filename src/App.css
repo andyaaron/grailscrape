@@ -60,6 +60,7 @@ h2 {
   margin: 1rem;
   display: flex;
   flex-flow: wrap;
+  gap: 1rem;
 }
 
 p {
@@ -94,7 +95,7 @@ form .entry-field input {
 }
 
 form .entry-field button {
-  width: 15vw;
+  width: 20vw;
   border: none;
   height: 45px;
   font-weight: bold;
@@ -123,6 +124,10 @@ form .entry-field button {
 .data-calculations span {
   font-weight: bold;
   font-size: 1.2rem;
+}
+
+svg {
+  /*max-width: 600px;*/
 }
 
 svg .grid {

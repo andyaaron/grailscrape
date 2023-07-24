@@ -5,6 +5,7 @@ import axios from 'axios';
 import LineGraph from "./LineGraph";
 import './App.css';
 import BarChart from "./BarChart";
+import PriceData from "./PriceData";
 
 // @TODO: Try using react instant search!
 function App() {
@@ -105,7 +106,10 @@ function App() {
                 </form>
 
                 {formSubmitted && hits.length > 0 ? (
-                    <LineGraph data={hits} />
+                    <>
+                        <PriceData data={hits} />
+                        <LineGraph data={hits} />
+                    </>
                 ) : (
                     <div>
                         <p>No data returned!</p>

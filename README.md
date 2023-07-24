@@ -1,5 +1,5 @@
 # TODOS
-- make graph responsive
+- ~~make graph responsive~~
 - allow user to refine results with clothing category
 - allow user refine results with a date range
 - allow user to set max amount of products to retrieve

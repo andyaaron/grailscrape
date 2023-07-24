@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import dayjs from 'dayjs';
-import PriceData from "./PriceData";
 
 const LineGraph = ({ data }) => {
     const svgRef = useRef();
@@ -15,7 +14,8 @@ const LineGraph = ({ data }) => {
 
     const createGraph = async (data) => {
         const margin = { top: 20, right: 30, bottom: 30, left: 30 };
-        const width = window.innerWidth - margin.left - margin.right;
+        const maxWidth = 600;
+        const width = Math.min(window.innerWidth - margin.left - margin.right, maxWidth);
         const height = 400 - margin.top - margin.bottom;
 
         // Format date in "MM-DD-YYYY" format
@@ -139,6 +139,7 @@ const LineGraph = ({ data }) => {
             .append('path')
             .datum(data)
             .attr('fill', 'rgba(76, 175, 80, 0.85)')
+            .attr('fill-opacity', 0.75)
             .attr('d', area);
 
         // Add dots for each data point
@@ -223,8 +224,6 @@ const LineGraph = ({ data }) => {
             <div id="svg" ref={svgRef}></div>
             <div className="additional-product-info"></div>
             </div>
-            <PriceData data={data} />
-
         </div>
     );
 };
