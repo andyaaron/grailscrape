@@ -12,6 +12,7 @@ function App() {
     const [productName, setProductName] = useState('');
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [hits, setHits] = useState([]);
+    const [nbHits, setNbHits] = useState(0); // page count
     const categoryOptions = [
         {'tops': []},
         {'bottoms': ['casual_pants', 'jumpsuits']},
@@ -40,17 +41,18 @@ function App() {
                 facets: ["department","category_path","category_size","designers.name","sold_price","condition","location","badges","strata"],
             })
             response.hits.forEach(hit => {
-                // console.log(`hit: ${hit.sold_at}`);
                 let data = {
                     sold_at: hit.sold_at,
                     sold_price: hit.sold_price,
                     url: hit.cover_photo.url,
-                    title: hit.title
+                    title: hit.title,
+
                 };
                 dates_and_prices.push(data);
 
             })
             setHits(dates_and_prices);
+            setNbHits(response.nbHits);
             setFormSubmitted(true);
         } catch (error) {
             console.error(error);

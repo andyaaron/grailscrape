@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import dayjs from 'dayjs';
+import PriceData from "./PriceData";
 
 const LineGraph = ({ data }) => {
     const svgRef = useRef();
@@ -13,8 +14,8 @@ const LineGraph = ({ data }) => {
     }, [data]);
 
     const createGraph = async (data) => {
-        const margin = { top: 20, right: 30, bottom: 30, left: 60 };
-        const width = 600 - margin.left - margin.right;
+        const margin = { top: 20, right: 30, bottom: 30, left: 30 };
+        const width = window.innerWidth - margin.left - margin.right;
         const height = 400 - margin.top - margin.bottom;
 
         // Format date in "MM-DD-YYYY" format
@@ -215,27 +216,6 @@ const LineGraph = ({ data }) => {
 
     }
 
-    // Calculate the average of the sold_price values in a currency format
-    const averageSoldPrice = (data.reduce((sum, d) => sum + d.sold_price, 0) / data.length).toLocaleString('en-US', {
-        style: 'currency',
-        currency: 'USD',
-    });
-
-    // Calculate the highest sold_price value
-    const highestSoldPrice = () => {
-        const highestPrice = Math.max(...data.map((item) => item.sold_price));
-        return highestPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-    };
-
-    // Calculate the lowest sold_price value in a currency format
-    const getLowestSoldPrice = () => {
-        return Math.min(...data.map((item) => item.sold_price)).toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD',
-        });
-    };
-
-
     return (
         <div className="container">
             <h2>Price History</h2>
@@ -243,25 +223,7 @@ const LineGraph = ({ data }) => {
             <div id="svg" ref={svgRef}></div>
             <div className="additional-product-info"></div>
             </div>
-            <div className="row data-calculations">
-                <div className="average">
-                    <span>{averageSoldPrice}</span>
-                    <label>Average Sales Price</label>
-                </div>
-                <div className="total">
-                    <span>{data && data.length > 0 && data.length}</span>
-                    <label>Total Items</label>
-                </div>
-                <div className="lowest-price">
-                    <span>{data && data.length > 0 && getLowestSoldPrice()}</span>
-                    <label>Lowest Price</label>
-                </div>
-                <div className="highest-price">
-                    <span>{data && data.length > 0 && highestSoldPrice()}</span>
-                    <label>Highest Price</label>
-                </div>
-
-            </div>
+            <PriceData data={data} />
 
         </div>
     );
