@@ -12,6 +12,11 @@ function App() {
     const [productName, setProductName] = useState('');
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [hits, setHits] = useState([]);
+    const categoryOptions = [
+        {'tops': []},
+        {'bottoms': ['casual_pants', 'jumpsuits']},
+        'outerwear', 'footwear', 'accessories'
+    ];
 
     useEffect(() => {
         // BarChart();
@@ -86,6 +91,11 @@ function App() {
                             value={productName}
                             onChange={handleSearchChange}
                         />
+                    </div>
+                    <div className={'entry-field'}>
+                       <select>
+
+                       </select>
                     </div>
                     <div className='entry-field'>
                         <button aria-label='Search' role='button'>Submit</button>
