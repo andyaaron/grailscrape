@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import dayjs from 'dayjs';
 import {useHits} from "react-instantsearch-hooks-web";
+import {sanitizeForURL} from "../helpers/helpers";
 
 const LineGraph = ( props ) => {
     const svgRef = useRef();
@@ -20,8 +21,6 @@ const LineGraph = ( props ) => {
 
     // Function to handle data point click event
     const handleDataPointClick = (event, dataPoint) => {
-        console.log('we in here');
-        console.log(`dataPoint: ${JSON.stringify(dataPoint)}`);
         const additionalDataDiv = document.querySelector('.additional-product-info');
         if (additionalDataDiv) {
             // Clear the existing content of the div
@@ -29,7 +28,9 @@ const LineGraph = ( props ) => {
 
             // Append the relevant data to the div
             additionalDataDiv.innerHTML = `
-                <h3>${dataPoint.title}</h3>
+                <div class="header">
+                    <h3><a href="https://grailed.com/listings/${dataPoint.objectID}-${dataPoint.designer_names}-${sanitizeForURL(dataPoint.title)}">${dataPoint.title}</a></h3>
+                </div>
                 <div class="flex-container">
                     <div class="column">
                         <div class="image">
@@ -43,6 +44,9 @@ const LineGraph = ( props ) => {
             })}</div>
                         <div class="sold-date">
                             <b>Sold At</b>: ${dayjs(dataPoint.sold_at).format('MM-DD-YYYY')}
+                        </div>
+                        <div class="link">
+                              <a href="https://grailed.com/listings/${dataPoint.objectID}-${dataPoint.designer_names}-${sanitizeForURL(dataPoint.title)}">→View Listing</a>
                         </div>
                     </div>
                 </div>

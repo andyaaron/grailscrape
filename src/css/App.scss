@@ -215,15 +215,33 @@ svg {
 
 .additional-product-info {
   text-align: left;
+  background: #282c34;
+  color: #fff;
+  width: 90vw;
+  padding: 1rem;
 
   h3 {
     margin-top: 0;
     font-size: 1rem;
+
+  }
+
+  a {
+    text-decoration: none;
+    color: #fff;
   }
 
   img {
-    max-width: 250px;
+    max-width: 125px;
     height: auto;
+  }
+
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: variables.$white;
   }
 
   .column:nth-child(2) {
