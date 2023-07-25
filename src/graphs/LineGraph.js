@@ -29,7 +29,7 @@ const LineGraph = ( props ) => {
             // Append the relevant data to the div
             additionalDataDiv.innerHTML = `
                 <div class="header">
-                    <h3><a href="https://grailed.com/listings/${dataPoint.objectID}-${dataPoint.designer_names}-${sanitizeForURL(dataPoint.title)}">${dataPoint.title}</a></h3>
+                    <h3><a target="_blank" href="https://grailed.com/listings/${dataPoint.objectID}-${dataPoint.designer_names}-${sanitizeForURL(dataPoint.title)}">${dataPoint.title}</a></h3>
                 </div>
                 <div class="flex-container">
                     <div class="column">
@@ -46,7 +46,7 @@ const LineGraph = ( props ) => {
                             <b>Sold At</b>: ${dayjs(dataPoint.sold_at).format('MM-DD-YYYY')}
                         </div>
                         <div class="link">
-                              <a href="https://grailed.com/listings/${dataPoint.objectID}-${dataPoint.designer_names}-${sanitizeForURL(dataPoint.title)}">→View Listing</a>
+                              <a target="_blank" href="https://grailed.com/listings/${dataPoint.objectID}-${dataPoint.designer_names}-${sanitizeForURL(dataPoint.title)}">→View Listing</a>
                         </div>
                     </div>
                 </div>
