@@ -83,7 +83,10 @@ function App() {
             </header>
 
             <div className='container'>
-                <InstantSearch searchClient={client} indexName="Listing_sold_production">
+                <InstantSearch
+                    searchClient={client}
+                    indexName="Listing_sold_production"
+                >
                 <div className="search-form">
                     <SearchBox />
                     <div className={"filters"}>

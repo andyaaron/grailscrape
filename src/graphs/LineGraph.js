@@ -6,12 +6,15 @@ import {useHits} from "react-instantsearch-hooks-web";
 const LineGraph = ( props ) => {
     const svgRef = useRef();
     const { hits, results, sendEvent } = useHits(props);
-
     useEffect(() => {
-        if (hits && hits.length > 0) {
-            const sortedData = hits.slice().sort((a, b) => a.sold_at - b.sold_at);
-            createGraph(sortedData);
+        if (!results.query) {
+            clearGraph();
+            return;
         }
+
+        const sortedData = hits.slice().sort((a, b) => a.sold_at - b.sold_at);
+        createGraph(sortedData);
+
     }, [hits]);
 
 
@@ -99,12 +102,7 @@ const LineGraph = ( props ) => {
         const formatUSD = d3.format('$,.0f');
 
         // Clear any previous graph elements
-        d3.select(svgRef.current).selectAll('*').remove();
-        d3.select('#container')
-            .select('svg')
-            .remove();d3.select('#container')
-            .select('.tooltip')
-            .remove();
+        await clearGraph();
 
         // Append the graph
         const svg = d3
@@ -220,6 +218,15 @@ const LineGraph = ( props ) => {
         //     .on("mousemove", mousemove);
 
     }
+
+    const clearGraph = async (data) => {
+        d3.select(svgRef.current).selectAll('*').remove();
+        d3.select('#container')
+            .select('svg')
+            .remove();d3.select('#container')
+            .select('.tooltip')
+            .remove();
+    };
 
     return (
         <div className="container">

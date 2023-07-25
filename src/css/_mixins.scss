@@ -1,0 +1,27 @@
+@use "variables";
+
+// use these to insert responsive css values into elements
+// 320px
+@mixin phone_size_small {
+  @media screen and (min-width: variables.$phone_breakpoint_small) { @content; }
+}
+
+// 360px
+@mixin phone_size_mid {
+  @media screen and (min-width: variables.$phone_breakpoint_mid) { @content; }
+}
+
+// 400px
+@mixin phone_size_large {
+  @media screen and (min-width: variables.$phone_breakpoint_large) { @content; }
+}
+
+// 768px
+@mixin tablet_size {
+  @media screen and (min-width: variables.$tablet_breakpoint) { @content; }
+}
+
+// 1024px
+@mixin desktop_size {
+  @media screen and (min-width: variables.$desktop_breakpoint) { @content; }
+}
