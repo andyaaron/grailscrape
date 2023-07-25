@@ -1,7 +1,18 @@
 @use "./variables";
 @use "./mixins";
 
-.App {
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  monospace;
 }
 
 .flex-container {
@@ -33,7 +44,7 @@ h2 {
   background-color: #282c34;
   height: 3vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   font-size: calc(5px + 2vmin);
@@ -62,10 +73,8 @@ h2 {
 }
 
 .row {
-  margin: 1rem;
   display: flex;
   flex-flow: wrap;
-  gap: 1rem;
 }
 
 p {
@@ -159,36 +168,33 @@ form .entry-field button {
 .data-calculations {
   display: grid;
   grid-template-columns: 50% 50%;
-  gap: 10px;
-}
 
-.data-calculations div {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 20px;
-  background: rgba(47, 47, 47, 0.9);
-  color: #fff;
-}
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    background: rgba(47, 47, 47, 0.9);
+    color: #fff;
+  }
 
-.data-calculations span {
-  font-weight: bold;
-  font-size: 1.2rem;
+  span {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
 }
 
 svg {
-  /*max-width: 600px;*/
-}
+  .grid {
+    color: #ccc;
+  }
 
-svg .grid {
-  color: #ccc;
-}
-
-svg .dot {
-  stroke-width: 2px;
-  stroke: rgba(255, 255, 255, 0.7);
-  cursor: pointer;
+  .dot {
+    stroke-width: 2px;
+    stroke: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+  }
 }
 
 .tooltip {
@@ -209,21 +215,21 @@ svg .dot {
 
 .additional-product-info {
   text-align: left;
-}
 
-.additional-product-info h3 {
-  margin-top: 0;
-  font-size: 1rem;
-}
+  h3 {
+    margin-top: 0;
+    font-size: 1rem;
+  }
 
-.additional-product-info img {
-  max-width: 250px;
-  height: auto;
-}
+  img {
+    max-width: 250px;
+    height: auto;
+  }
 
-.additional-product-info .column:nth-child(2) {
-  justify-content: flex-start;
-  margin-left: 1rem;
+  .column:nth-child(2) {
+    justify-content: flex-start;
+    margin-left: 1rem;
+  }
 }
 
 .collapsible-header {
@@ -231,10 +237,10 @@ svg .dot {
   flex-direction: row;
   align-items: center;
   gap: 10px;
-}
 
-.collapsible-header h3 {
-  margin: 5px 0;
+  h3 {
+    margin: 5px 0;
+  }
 }
 
 @keyframes App-logo-spin {

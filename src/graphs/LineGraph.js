@@ -230,7 +230,7 @@ const LineGraph = ( props ) => {
 
     return (
         <div className="container">
-            <h2>Price History</h2>
+            {/*<h2>Price History</h2>*/}
             <div className="row">
             <div id="svg" ref={svgRef}></div>
             <div className="additional-product-info"></div>

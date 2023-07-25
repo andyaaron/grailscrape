@@ -28,6 +28,12 @@ const PriceData = ( props ) => {
         });
     };
 
+    if (!results.query) {
+        return (
+            <div className="row data-calculations"></div>
+        )
+    }
+
     return (
         <div className="row data-calculations">
             <div className="average">

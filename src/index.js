@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './css/index.scss';
-import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import TagManager from 'react-gtm-module'
+
+import App from './components/App';
+
+import './css/index.scss';
 
 const tagManagerArgs = {
     gtmId: 'G-4XDXN4Z271'

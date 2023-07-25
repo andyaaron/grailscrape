@@ -1,0 +1,19 @@
+@use 'variables';
+
+// Icons
+.icon {
+
+  height: 33px;
+  width: 37px;
+  background: variables.$white;
+
+  &.search {
+    mask: variables.$search;
+    cursor: pointer;
+  }
+
+  &.search-open {
+      mask: variables.$search-open;
+      cursor: pointer;
+  }
+}
