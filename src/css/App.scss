@@ -86,16 +86,19 @@ p {
   background: #282c34;
   padding: 1.2rem;
 
+  ul {
+    text-align: left;
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .ais-RefinementList-count {
+    margin-left: 5px;
+  }
 }
 
-.search-form ul {
-  text-align: left;
-  list-style: none;
-  padding-left: 0;
-}
-
-.search-form .ais-RefinementList-count {
-  margin-left: 5px;
+.search-form.closed {
+  display: none;
 }
 
 form {

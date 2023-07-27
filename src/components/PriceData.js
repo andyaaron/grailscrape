@@ -30,7 +30,7 @@ const PriceData = ( props ) => {
 
     if (!results.query) {
         return (
-            <div className="row data-calculations"></div>
+            <div></div>
         )
     }
 

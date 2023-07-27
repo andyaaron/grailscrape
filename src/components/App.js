@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from "react";
 import algoliasearch from "algoliasearch";
 import SearchMenu from "./SearchMenu";
+import PriceData from "./PriceData";
+import LineGraph from "../graphs/LineGraph";
+import {InstantSearch} from "react-instantsearch-hooks-web";
 
 // @TODO: Try using react instant search!
 function App() {
-    const [isSearchMenuOpen, setIsSearchMenuOpen] = useState(false);
+    const [toggleMenu, setToggleMenu] = useState(false);
     const [isCollapsed, setIsCollapsed] = useState(true);
     const [hits, setHits] = useState([]);
 
@@ -13,23 +16,26 @@ function App() {
     };
 
     const toggleSearchMenu = () => {
-        setIsSearchMenuOpen(!isSearchMenuOpen);
+        setToggleMenu(!toggleMenu);
     };
 
     const client = algoliasearch('MNRWEFSS2Q', 'bc9ee1c014521ccf312525a4ef324a16');
     const index = "Listing_sold_production"
+
     return (
         <div className="App">
             <header className="App-header">
                 <h2>GrailSight</h2>
-                <div role="button" className={`icon search${isSearchMenuOpen ? '-open' : ''}`} onClick={toggleSearchMenu}></div>
+                <div role="button" className={`icon search${toggleMenu ? '-open' : ''}`} onClick={toggleSearchMenu}></div>
             </header>
 
-            {isSearchMenuOpen && <SearchMenu client={client} index={index} hits={hits} />}
-
-            <div className='container'>
-
-            </div>
+            <InstantSearch searchClient={client}  indexName={index}>
+                <SearchMenu toggleMenu={toggleMenu} client={client} index={index} hits={hits} />
+                <div className='container'>
+                    <PriceData hits={hits}  />
+                    <LineGraph hits={hits} />
+                </div>
+            </InstantSearch>
         </div>
     );
 }
