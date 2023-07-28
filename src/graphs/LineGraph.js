@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import dayjs from 'dayjs';
 import {useHits} from "react-instantsearch-hooks-web";
 import {sanitizeForURL} from "../helpers/helpers";
+// import calculateTrendLine from './TrendLine';
 
 const LineGraph = ( props ) => {
     const svgRef = useRef();
@@ -161,6 +162,37 @@ const LineGraph = ( props ) => {
             .attr('r', 5)
             .attr('fill', 'green');
 
+        /*
+        / CALCULATE TREND LINE
+        */
+
+        // Calculate the overall trend line using the utility function
+        // const trendLineData = calculateTrendLine(data);
+        //
+        // // Create a line generator function for the trend line
+        // const trendLine = d3
+        //     .line()
+        //     .x((d) => xScale(d.sold_at))
+        //     .y((d) => yScale(d.sold_price));
+
+        // Draw the trend line on the graph
+        // svg
+        //     .append('path')
+        //     .datum(trendLineData)
+        //     .attr('class', 'trend-line')
+        //     .attr('d', trendLine)
+        //     .style('stroke', 'red')
+        //     .style('stroke-width', 2)
+        //     .style('fill', 'none');
+
+        /*
+        / END TREND LINE
+        */
+
+        /*
+        / TOOLTIP
+        */
+
         // Setup our tooltip
         // const focus = svg
         //     .append('g')
@@ -221,6 +253,9 @@ const LineGraph = ( props ) => {
         //     })
         //     .on("mousemove", mousemove);
 
+        /*
+        / END TOOLTIP
+        */
     }
 
     const clearGraph = async (data) => {

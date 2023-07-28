@@ -13,7 +13,9 @@ const Collapsible = ({ title, children }) => {
                 <h3>{title}</h3>
                 <div className="arrow-icon">{isCollapsed ? '►' : '▲'}</div>
             </div>
-            {!isCollapsed && children}
+            <div className={`collapsible-body ${isCollapsed ? 'collapsed' : ''}`}>
+                {children}
+            </div>
         </div>
     );
 };
