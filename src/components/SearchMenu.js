@@ -23,6 +23,10 @@ const SearchMenu = (props) => {
                     <Collapsible title="Location">
                         <RefinementList attribute="location" operator="and" />
                     </Collapsible>
+
+                    <Collapsible title="Currency">
+
+                    </Collapsible>
                 </div>
             </div>
         </div>

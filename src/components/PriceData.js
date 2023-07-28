@@ -9,7 +9,7 @@ const PriceData = ( props ) => {
     // Calculate the average of the sold_price values in a currency format
     const averageSoldPrice = (hits.reduce((sum, d) => sum + d.sold_price, 0) / hits.length).toLocaleString('en-US', {
         style: 'currency',
-        currency: 'USD',
+        currency: props.currency,
     });
 
     const totalItems = hits.length;
@@ -17,14 +17,14 @@ const PriceData = ( props ) => {
     // Calculate the highest sold_price value
     const highestSoldPrice = () => {
         const highestPrice = Math.max(...hits.map((item) => item.sold_price));
-        return highestPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        return highestPrice.toLocaleString('en-US', { style: 'currency', currency: props.currency });
     };
 
     // Calculate the lowest sold_price value in a currency format
     const getLowestSoldPrice = () => {
         return Math.min(...hits.map((item) => item.sold_price)).toLocaleString('en-US', {
             style: 'currency',
-            currency: 'USD',
+            currency: props.currency,
         });
     };
 
